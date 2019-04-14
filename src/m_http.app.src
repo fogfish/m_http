@@ -1,0 +1,15 @@
+{application, m_http,
+   [
+      {description, "http monad library"},
+      {vsn,         "git"},
+      {modules,     []},
+      {registered,  []},
+      {applications,[
+         kernel, 
+         stdlib,
+         datum,
+         hackney
+      ]},
+      {env, []}
+   ]
+}.  
