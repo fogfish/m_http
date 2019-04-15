@@ -75,10 +75,26 @@ putT(X) ->
 -spec getT(_) -> m(_).
 
 getT(Code) when is_integer(Code) ->
-   request().
-   % [m_state ||
-   %    request()
-   % ].
+   [m_state ||
+      request(),
+      require(code, Code)
+   ];
+
+getT(Head)
+ when is_list(Head) ->
+   [H, V] = binary:split(typecast:s(Head), <<$:>>),
+   case hv(V) of
+      <<$_>> ->
+         require(header, lens:pair(H));
+      Value  ->
+         require(header, lens:c(lens:pair(H), lens:require(Value)))
+   end;
+
+getT('*') ->
+   require(content, lens:id());
+
+getT(Lens) ->
+   require(content, Lens).
 
 
 %%
@@ -137,15 +153,6 @@ l_req_header(Head) ->
 
 l_req_payload() ->
    lens:c(lens:at(req), lens:tl()).
-
-
-% req() ->
-%    lens:c(lens:at(req), lens:hd()).
-
-
-% req_uri() ->
-
-
 
 
 
@@ -239,10 +246,50 @@ stream(Stream, Acc, State) ->
       done ->
          case m_http_codec:decode(lists:reverse(Acc)) of
             {ok, Http} ->
-               [Http | State];
+               [Http | State#{ret => Http}];
             {error, Reason} ->
                fail(Reason)
          end;
       {error, Reason} ->
          fail(Reason)
+   end.
+
+%%
+%%
+-spec require(lens:lens()) -> m(_).
+-spec require(atom(), lens:lens()) -> m(_).
+
+require(Lens) ->
+   fun(State) ->
+      case lens:get(lens:c(lens:at(ret, #{}), Lens), State) of
+         {ok, Expect} ->
+            [Expect | State];
+         {error, Reason} ->
+            throw(Reason);
+         LensFocusedAt ->
+            [LensFocusedAt | State]
+      end
+   end.
+
+require(code, Code) ->
+   require( lens:c(lens:hd(), lens:t1(), lens:require(Code)) );
+
+require(header, Lens) ->
+   require( lens:c(lens:hd(), lens:t3(), Lens) );
+
+require(content, Lens) ->
+   require( lens:c(lens:tl(), lens:hd(), Lens) ).
+
+%%
+%%
+-spec defined(lens:lens()) -> m(_).
+
+defined(Lens) ->
+   fun(State) ->
+      case lens:get(lens:c(lens:at(ret, #{}), Lens), State) of
+         undefined ->
+            throw(undefined);
+         LensFocusedAt ->
+            [LensFocusedAt | State]
+      end
    end.

@@ -38,6 +38,8 @@ deref(X) ->
 
 encode(<<"application/json">>, Json) ->
    m_http_codec_json:encode(Json);
+encode(<<"application/x-ndjson">>, Json) ->
+   m_http_codec_ndjson:encode(Json);
 encode(<<"application/x-www-form-urlencoded">>, Form) ->
    m_http_codec_www_form:encode(Form);
 encode(<<"text/plain">>, Text) ->
@@ -50,9 +52,9 @@ encode(_, Binary) ->
 -spec decode(_, _) -> datum:either(_).
 
 decode([{_Code, _Text, Head} = Http | Data]) ->
+   io:format("==> ~p~n", [Head]),
+   io:format("==> ~p~n", [Data]),
    case decode(lens:get(lens:pair(<<"Content-Type">>), Head), Data) of
-      {ok, Content} when is_list(Content) ->
-         {ok, [Http | Content]};
       {ok, Content} ->
          {ok, [Http, Content]};
       {error, _} = Error ->
@@ -61,6 +63,8 @@ decode([{_Code, _Text, Head} = Http | Data]) ->
 
 decode(<<"application/json", _/binary>>, Data) ->
    m_http_codec_json:decode(Data);
+decode(<<"application/x-ndjson">>, Data) ->
+   m_http_codec_ndjson:decode(Data);
 decode(<<"application/x-www-form-urlencoded", _/binary>>, Data) -> 
    m_http_codec_www_form:decode(Data);
 decode(<<"text/plain", _/binary>>, Data) ->
