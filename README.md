@@ -1,6 +1,6 @@
 # Http Monad
 
-A class of Erlang monads which can do http requests with few interesting properties ... 
+A class of Erlang monads which can do http requests with few interesting properties such as composition and laziness. 
 
 ## Inspiration
 
@@ -31,12 +31,11 @@ This semantic provides an intuitive approach to specify HTTP requests/responses.
 
 ## Key features
 
-tbd.
-
-composition of http
-human friendly syntax DSL
-auto encoders/decoders
-api testing as part of common suite 
+* composition of HTTP I/O
+* lazy I/O for evaluation of HTTP requests on-demand
+* human-friendly, Erlang native syntax to depict HTTP I/O
+* auto encoders/decoders of `Content-Type`
+* easy RESTful API testing with common suite
 
 
 ## Getting started
