@@ -1,14 +1,43 @@
 # Http Monad
 
-A class of Erlang monads which can do http requests.
+A class of Erlang monads which can do http requests with few interesting properties ... 
 
 ## Inspiration
 
-tbd.
+Microservices have become a design style to evolve system architecture in parallel,
+implement stable and consistent interfaces. An expressive language is required to 
+design the variety of network communication use-cases. A pure functional languages
+fits very well to express communication behavior. It gives a rich techniques to hide 
+the networking complexity using monads as abstraction. The IO-monads helps us to compose
+a chain of network operations and represent them as pure computation, build a new 
+things from small reusable elements. This library uses the "do"-notation, so called monadic binding form. It is well know in functional programming languages such as [Haskell](https://en.wikibooks.org/wiki/Haskell/do_notation), [Scala](http://docs.scala-lang.org/tutorials/tour/sequence-comprehensions.html) and [Erlang](https://github.com/fogfish/datum/blob/master/doc/monad.md). The *RESTfull networking* becomes a collection of composed "do"-notation in context of a [state monad](https://acm.wustl.edu/functional/state-monad.php).
+
+The library adapts a human-friendly syntax of HTTP request/response logging/definition used by curl and [KATT](https://github.com/for-GET/katt). 
+
+```
+> GET / HTTP/1.1
+> Host: example.com
+> User-Agent: curl/7.54.0
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: text/html; charset=UTF-8
+< Server: ECS (phd/FD58)
+< ...
+```
+
+This semantic provides an intuitive approach to specify HTTP requests/responses. Adoption of this syntax as Erlang native code is backed by [transformers](https://github.com/fogfish/datum/blob/master/doc/category.md#composition-with-transformers) and provides a rich capability to network programming.
+
 
 ## Key features
 
 tbd.
+
+composition of http
+human friendly syntax DSL
+auto encoders/decoders
+api testing as part of common suite 
+
 
 ## Getting started
 
