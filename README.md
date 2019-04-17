@@ -33,9 +33,9 @@ This semantic provides an intuitive approach to specify HTTP requests/responses.
 
 * composition of HTTP I/O
 * lazy I/O for evaluation of HTTP requests on-demand
-* human-friendly, Erlang native syntax to depict HTTP I/O
+* human-friendly, Erlang native, and declarative syntax to depict HTTP requests/responses
 * auto encoders/decoders of `Content-Type`
-* easy RESTful API testing with common suite
+* declarative approach for RESTful API testing
 
 
 ## Getting started

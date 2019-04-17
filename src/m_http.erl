@@ -203,12 +203,12 @@ payload(Value) ->
    fun(State0) ->
       case
          m_http_codec:encode(
-            lens:get(l_req_header(<<"Content-Type">>)),
+            lens:get(l_req_header(<<"Content-Type">>), State0),
             Value
          )
       of
          {ok, Payload} ->
-            Length = erlang:byte_size(Payload),
+            Length = erlang:iolist_size(Payload),
             State1 = lens:put(l_req_payload(), Payload, State0),
             State2 = lens:put(l_req_header(<<"Content-Length">>), Length, State1),
             [Payload | State2];

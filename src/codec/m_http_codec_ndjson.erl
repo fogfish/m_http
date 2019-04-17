@@ -7,15 +7,25 @@
 
 encode(Json) ->
    [either ||
-      cats:unit([m_http_codec_json:encode(X) || X <- Json]),
-      cats:seqeunce(_)
+      cats:unit([to_json(X) || X <- Json]),
+      cats:sequence(_),
+      cats:unit(_)
    ].
+
+to_json(Data) ->
+   try
+      {ok, 
+         [jsx:encode(Data), <<$\n>>]
+      }
+   catch _:_ ->
+      {error, badarg}
+   end.   
 
 -spec decode(_) -> datum:either(_).
 
 decode(Json) ->
    [either ||
-      cats:unit(binary:split(Json, [<<$\n>>, <<$\r,$\n>>], [trim, global])),
+      cats:unit(binary:split(erlang:iolist_to_binary(Json), [<<$\n>>, <<$\r,$\n>>], [trim, global])),
       cats:unit([m_http_codec_json:decode(X) || X <- _]),
-      cats:seqeunce(_)
+      cats:sequence(_)
    ].

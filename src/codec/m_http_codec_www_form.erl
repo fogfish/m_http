@@ -14,12 +14,12 @@ encode(Form) ->
          lists:map(fun to_pair/1, _),
          typecast:s(lists:join(<<$&>>, _))
       ]}
-   catch _:_ ->
+   catch X:Y ->
       {error, badarg}
    end.
 
 to_pair(Pair) ->
-   typecase:s(
+   typecast:s(
       lists:join(<<$=>>, 
          [m_http_codec_url:escape(X) || X <- erlang:tuple_to_list(Pair)]
       )
