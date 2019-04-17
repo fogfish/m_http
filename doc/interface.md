@@ -25,5 +25,5 @@ example() ->
    ].
 ```
 
-Symbols `_ >` defines writer morphism that focuses inside HTTP protocol environment and defines the request behavior;  `_ <` - reader morphism that focuses on executed side-effect (response) of HTTP protocol (See [Composition with state](https://github.com/fogfish/datum/blob/master/doc/category.md#composition-with-state) and [Composition with transformers](https://github.com/fogfish/datum/blob/master/doc/category.md#composition-with-transformers) for details about syntax).
+Symbols `_ >` defines writer morphism that focuses inside HTTP protocol environment and defines the request behavior;  `_ <` - reader morphism that focuses on executed side-effect (response) of HTTP protocol (See [Composition with state](https://github.com/fogfish/datum/blob/master/doc/category.md#composition-with-state) and [Composition with transformers](https://github.com/fogfish/datum/blob/master/doc/category.md#composition-with-transformers) for details about syntax). Please note that semantic of symbols is directly adapted from curl and [KATT](https://github.com/for-GET/katt).
 
