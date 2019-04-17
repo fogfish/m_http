@@ -1,0 +1,14 @@
+{application, examples,
+   [
+      {description, "examples of http monad"},
+      {vsn,         "0.0.0"},
+      {modules,     []},
+      {registered,  []},
+      {applications,[
+         kernel, 
+         stdlib,
+         m_http
+      ]},
+      {env, []}
+   ]
+}.
