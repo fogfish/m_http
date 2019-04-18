@@ -170,7 +170,7 @@ Please note two lenses: `fun lens:require/1`, `fun lens:defined/0` they give a f
 
 ### Example
 
-```
+```erlang
 example() ->
    [m_http ||
       _ > "GET http://httpbin.org/json",
