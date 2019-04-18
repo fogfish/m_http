@@ -2,6 +2,9 @@
 
 A class of Erlang monads which can do http requests with few interesting properties such as composition and laziness. 
 
+[![Build Status](https://secure.travis-ci.org/fogfish/m_http.svg?branch=master)](http://travis-ci.org/fogfish/m_http) 
+[![Coverage Status](https://coveralls.io/repos/github/fogfish/m_http/badge.svg?branch=master)](https://coveralls.io/github/fogfish/m_http?branch=master) 
+
 ## Inspiration
 
 Microservices have become a design style to evolve system architecture in parallel,
