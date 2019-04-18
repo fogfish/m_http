@@ -31,11 +31,22 @@ This semantic provides an intuitive approach to specify HTTP requests/responses.
 
 ## Key features
 
-* composition of HTTP I/O
-* lazy I/O for evaluation of HTTP requests on-demand
-* human-friendly, Erlang native, and declarative syntax to depict HTTP requests/responses
-* auto encoders/decoders of `Content-Type`
-* declarative approach for RESTful API testing
+The [interface overview](doc/interface.md) provides an introduction to HTTP monad features and use-cases:
+
+* monad abstraction of HTTP request/response pattern
+* supports on-demand, lazy evaluation of HTTP I/O
+* high-order composition of individual HTTP requests to complex networking computations
+* human-friendly, Erlang native and declarative syntax to depict HTTP operations
+* implements a declarative approach for testing of RESTful interfaces
+* automatically encodes/decodes Erlang Native HTTP payload using `Content-Type` hints 
+* supports non-I/O simulation for unit testing
+
+**Supported MIME types**
+ 
+- [x] application/json
+- [x] application/x-ndjson
+- [x] application/x-www-form-urlencoded
+- [x] text/plain
 
 
 ## Getting started
@@ -53,6 +64,7 @@ tbd.
 ### More Information
 
 * Study [category pattern](https://github.com/fogfish/datum/blob/master/doc/category.md) as composition style of development to build a new things from small reusable elements.
+* Study syntax and [HTTP monad interface](doc/interface.md)
 
 
 ## How To Contribute
