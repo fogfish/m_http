@@ -5,7 +5,6 @@
 
 -export([example/0]).
 
-
 example() ->
    [m_http ||
       _ > "GET http://httpbin.org/json",

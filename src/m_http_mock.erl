@@ -14,6 +14,7 @@
 init() ->
    meck:new(hackney, [unstick]).
 
+%% @todo: mock input via routing function fun(Url) -> {Code, Head, Body}
 init(Code, Head, Body) ->
    init(),
    response(Code, Head, Body).

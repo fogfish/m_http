@@ -14,7 +14,7 @@ encode(Form) ->
          lists:map(fun to_pair/1, _),
          typecast:s(lists:join(<<$&>>, _))
       ]}
-   catch X:Y ->
+   catch _:_ ->
       {error, badarg}
    end.
 

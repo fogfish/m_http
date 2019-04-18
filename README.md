@@ -67,7 +67,7 @@ If you are using `rebar3` you can include the library in your project with
 
 ### Usage
 
-Please study the [examples](examples) for details about abilities of this library. This section is a quick guide into it. Example project uses [httpbin.org](http://httpbin.org) to demonstrate libraries ability. 
+Please study the syntax and [HTTP monad interface](doc/interface.md). The library supplies [examples](examples) to demonstrate its abilities. This section is a short references to these features. Note, example project uses [httpbin.org](http://httpbin.org) service.
 
 Build and run examples with
 
@@ -75,6 +75,8 @@ Build and run examples with
 cd examples
 make && make run
 ```
+
+Initiate example application
 
 ```erlang
 application:ensure_all_started(examples).
@@ -100,7 +102,29 @@ m_http:once(IO).
 
 **Composition of HTTP monads**
 
-tbd.
+Check [m_http_compose.erl](examples/src/m_http_compose.erl).
+
+```erlang
+%%
+%% builds a pure HTTP networking computation without side-effect evaluation
+%%
+%% #Fun<m_state.1.102573846>
+IO = m_http_compose:hof().
+
+%%
+%% evaluate a side-effect of the computation
+%%
+%% {ok, [#{ua => ..., text => ...}]}
+m_http:once(IO).
+```
+
+**Declarative testing of RESTfull API**
+
+Check [httpbin_SUITE.erl](examples/src/httpbin_SUITE.erl)
+
+**Non I/O simulation**
+
+Check [m_http_mock_SUITE.erl](examples/src/m_http_mock_SUITE.erl)
 
 ### More Information
 
