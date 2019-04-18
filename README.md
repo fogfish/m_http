@@ -184,9 +184,7 @@ If you experience any issues with the library, please let us know via [GitHub is
 
 ## License
 
-Copyright (c) 2016, Dmitry Kolesnikov
-
-Copyright (c) 2016, Mario Cardona
+Copyright (c) 2016, Dmitry Kolesnikov, Mario Cardona
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
 
