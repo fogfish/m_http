@@ -120,11 +120,11 @@ m_http:once(IO).
 
 **Declarative testing of RESTfull API**
 
-Check [httpbin_SUITE.erl](examples/src/httpbin_SUITE.erl)
+Check [httpbin_SUITE.erl](examples/test/httpbin_SUITE.erl)
 
 **Non I/O simulation**
 
-Check [m_http_mock_SUITE.erl](examples/src/m_http_mock_SUITE.erl)
+Check [m_http_mock_SUITE.erl](examples/test/m_http_mock_SUITE.erl)
 
 ### More Information
 
@@ -134,7 +134,7 @@ Check [m_http_mock_SUITE.erl](examples/src/m_http_mock_SUITE.erl)
 
 ## How To Contribute
 
-The library is `tbd.` licensed and accepts contributions via GitHub pull requests:
+The library is Apache 2.0 licensed and accepts contributions via GitHub pull requests:
 
 * Fork the repository on GitHub
 * Read build instructions
@@ -181,5 +181,10 @@ If you experience any issues with the library, please let us know via [GitHub is
 
 ## License
 
-tbd.
+Copyright (c) 2016, Dmitry Kolesnikov
+Copyright (c) 2016, Mario Cardona
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
