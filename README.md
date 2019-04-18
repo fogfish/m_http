@@ -55,9 +55,50 @@ The latest version of the library is available at its `master` branch. All devel
 
 ### Installation
 
-tbd.
+If you are using `rebar3` you can include the library in your project with
+
+```erlang
+{deps, [
+   {m_http, ".*",
+      {git, "https://github.com/fogfish/m_http", {branch, master}}
+   }
+]}.
+```
 
 ### Usage
+
+Please study the [examples](examples) for details about abilities of this library. This section is a quick guide into it. Example project uses [httpbin.org](http://httpbin.org) to demonstrate libraries ability. 
+
+Build and run examples with
+
+```bash
+cd examples
+make && make run
+```
+
+```erlang
+application:ensure_all_started(examples).
+```
+
+**Monadic abstraction**
+
+Check [m_http_syntax.erl](examples/src/m_http_syntax.erl).
+
+```erlang
+%%
+%% builds a pure HTTP networking computation without side-effect evaluation
+%%
+%% #Fun<m_state.1.102573846>
+IO = m_http_syntax:example().
+
+%%
+%% evaluate a side-effect of the computation
+%%
+%% {ok, [#{<<"title">> => <<"Wake up to WonderWidgets!">>, ...}]}
+m_http:once(IO).
+```
+
+**Composition of HTTP monads**
 
 tbd.
 
