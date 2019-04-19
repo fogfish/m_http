@@ -72,6 +72,20 @@ If you are using `rebar3` you can include the library in your project with
 
 Please study the syntax and [HTTP monad interface](doc/interface.md). The library supplies [examples](examples) to demonstrate its abilities. This section is a short references to these features. Note, example project uses [httpbin.org](http://httpbin.org) service.
 
+An example workflow is
+ 
+```erlang
+example() ->
+   [m_http ||
+      _ > "GET http://example.com",
+      _ > "Accept: text/html",
+
+      _ < 200,
+      _ < "Content-Type: text/html; charset=UTF-8",
+      _ < '*'
+   ].
+```
+
 Build and run examples with
 
 ```bash
