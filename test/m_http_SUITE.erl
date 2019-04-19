@@ -195,3 +195,21 @@ http_body_decode_and_match(_) ->
    ),
    m_http_mock:free().
 
+%%
+http_body_decode_and_match_with_accept(_) ->
+   m_http_mock:init(200, 
+      [], 
+      [<<"{\"a\":\"abcde\"}">>]
+   ),
+   {ok, <<"abcde">>} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/"},
+         _ > "Accept: application/json",
+
+         _ < 200,
+         _ < lens:at(<<"a">>)
+      ]
+   ),
+   m_http_mock:free().
+
+
