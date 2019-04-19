@@ -68,8 +68,8 @@ encode(_, Binary) ->
 %%
 -spec decode(_, _) -> datum:either(_).
 
-decode([{_Code, _Text, Head} = Http | Data]) ->
-   case decode(lens:get(lens:pair(<<"Content-Type">>), Head), Data) of
+decode([Accept, {_Code, _Text, Head} = Http | Data]) ->
+   case decode(lens:get(lens:pair(<<"Content-Type">>, Accept), Head), Data) of
       {ok, Content} ->
          {ok, [Http, Content]};
       {error, _} = Error ->

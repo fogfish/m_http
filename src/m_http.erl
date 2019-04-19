@@ -261,7 +261,11 @@ stream(Stream, Acc, State) ->
       {ok, Data} ->
          stream(Stream, [Data | Acc], State);
       done ->
-         case m_http_codec:decode(lists:reverse(Acc)) of
+         case 
+            m_http_codec:decode(
+               [lens:get(l_req_header(<<"Accept">>), State) | lists:reverse(Acc)]
+            )
+         of
             {ok, Http} ->
                [Http | State#{ret => Http}];
             {error, Reason} ->
