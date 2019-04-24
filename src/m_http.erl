@@ -110,9 +110,22 @@ getT(Head)
 getT('*') ->
    require(content, lens:id());
 
-getT(Lens) ->
+getT(ADT)
+ when is_tuple(ADT) ->
+   erlang:list_to_tuple(
+      [cast(X) || X <- erlang:tuple_to_list(ADT)]
+   );
+
+getT(Lens)
+ when is_function(Lens) ->
    require(content, Lens).
 
+
+cast(Lens)
+ when is_function(Lens) ->
+   require(content, Lens);
+cast(Value) ->
+   Value.
 
 %%
 %% @doc evaluate monadic expression
