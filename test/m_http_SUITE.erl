@@ -19,6 +19,7 @@
 %%   common test suite for m_http public api
 -module(m_http_SUITE).
 -compile({parse_transform, category}).
+-compile({parse_transform, generic}).
 
 -export([all/0]).
 -compile(export_all).
@@ -212,4 +213,39 @@ http_body_decode_and_match_with_accept(_) ->
    ),
    m_http_mock:free().
 
+%%
+%%
+-record(adt, {a, b}).
 
+http_body_decode_adt(_) ->
+   m_http_mock:init(200, 
+      [{<<"Content-Type">>, <<"application/json">>}], 
+      [<<"{\"a\":\"abcde\",\"b\":1}">>]
+   ),
+   {ok, #adt{a = <<"abcde">>, b = 1}} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/"},
+
+         _ < 200,
+         _ < #adt{
+            a = lens:at(<<"a">>),
+            b = lens:at(<<"b">>)
+         }
+      ]
+   ),
+   m_http_mock:free().
+
+%%
+http_body_encode_adt(_) -> 
+   m_http_mock:init(200, [], []),
+   {ok, _} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/"},
+         _ > "Content-Type: application/json",
+         _ > generic:from(#adt{a = <<"hello">>, b = <<"world">>}),
+
+         _ < 200,
+         _ < "X-Mock-Body: {\"a\":\"hello\",\"b\":\"world\"}"
+      ]
+   ),
+   m_http_mock:free().
