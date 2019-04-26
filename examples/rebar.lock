@@ -6,7 +6,7 @@
  {<<"jsx">>,{pkg,<<"jsx">>,<<"2.9.0">>},1},
  {<<"m_http">>,
   {git,"https://github.com/fogfish/m_http",
-       {ref,"d9a34606d263756205eab2afa7b047da7e6b5bfd"}},
+       {ref,"82e0aa1813b39c3a71e3d329cdaa976a499d2041"}},
   0},
  {<<"metrics">>,{pkg,<<"metrics">>,<<"1.0.1">>},2},
  {<<"mimerl">>,{pkg,<<"mimerl">>,<<"1.2.0">>},2},

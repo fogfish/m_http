@@ -41,7 +41,8 @@ The [interface overview](doc/interface.md) provides an introduction to HTTP mona
 * high-order composition of individual HTTP requests to complex networking computations
 * human-friendly, Erlang native and declarative syntax to depict HTTP operations
 * implements a declarative approach for testing of RESTful interfaces
-* automatically encodes/decodes Erlang Native HTTP payload using `Content-Type` hints 
+* automatically encodes/decodes Erlang Native HTTP payload using `Content-Type` hints
+* supports generic transformation to algebraic data types (Erlang records)
 * supports non-I/O simulation for unit testing
 
 **Supported MIME types**
@@ -132,6 +133,40 @@ IO = m_http_compose:hof().
 %% evaluate a side-effect of the computation
 %%
 %% {ok, [#{ua => ..., text => ...}]}
+m_http:once(IO).
+```
+
+**Encode/Decode**
+
+Check [m_http_codec.erl](examples/src/m_http_codec.erl).
+
+```erlang
+%%
+%% builds a pure HTTP networking computation without side-effect evaluation
+%%
+%% #Fun<m_state.1.102573846>
+IO = m_http_auto_codec:gen().
+
+%%
+%% evaluate a side-effect of the computation
+%%
+%% {ok,#{<<"hello">> => <<"world">>}}
+m_http:once(IO).
+```
+
+Previous examples applies automatic codec for generic data structures such as maps, list of pairs. The library also supports semi-auto encode/decode to/from algebraic data structures (records). Please note that current release supports only flats ADTs. 
+
+```erlang
+%%
+%% builds a pure HTTP networking computation without side-effect evaluation
+%%
+%% #Fun<m_state.1.102573846>
+IO = m_http_auto_codec:adt().
+
+%%
+%% evaluate a side-effect of the computation
+%%
+%% {ok, {adt,<<"world">>}]}
 m_http:once(IO).
 ```
 

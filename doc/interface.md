@@ -97,6 +97,18 @@ You can also use native Erlang data types (e.g. maps, list of pairs) as egress p
 ]
 ```
 
+The library support a serialization of algebraic data types -- Erlang records. You have to supply a record structure `record_info(fields, ...)` along with your data.
+
+```erlang
+[m_http ||
+   ...
+   _ > "Content-Type: application/json",
+   _ > {record_info(fields, myrecord),
+            #myrecord{ ... }}
+   ...
+]
+```
+
 ### Response code
 
 Specification of expected HTTP Status Code is *mandatory*, use an integer value to specify expected result. The execution fails if service responds with other value then specified one.
@@ -168,6 +180,17 @@ Please note two lenses: `fun lens:require/1`, `fun lens:defined/0` they give a f
 ]
 ```
 
+Additionally, you can "lift" response to algebraic data types -- Erlang records. Just defined a record template along with lenses that lifts data-in.
+
+```erlang
+[m_http ||
+   ...
+   _ < #myrecord{
+      myfield = lens:c(lens:at(<<"person">>), lens:at(<<"username">>))
+   }
+]
+```
+
 ### Example
 
 ```erlang
@@ -207,6 +230,22 @@ github_user_profile(Token) ->
    ].
 
 github_user_contribution(Token) ->
+   [m_http ||
+      ...
+   ].
+```
+
+### Composition with recursion
+
+```erlang
+recursive() ->
+   [m_state ||
+      Head <- fetch(),
+      Tail <- recursive(),
+      cats:unit(Head ++ Tail)
+   ].
+
+fetch() ->
    [m_http ||
       ...
    ].
