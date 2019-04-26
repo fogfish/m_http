@@ -34,6 +34,31 @@ all() ->
 
 %%
 %%
+http_header_encode(_) ->
+   m_http_mock:init(200, [], []),
+   {ok, _} = m_http:once(
+      [m_http ||
+         _ > {'PUT', "http://example.com/"},
+         _ > "Binary: text/plain",
+         _ > "Int: 10",
+         _ > "Float: 1.0",
+         _ > "E: 1.0e2",
+         _ > "True: true",
+         _ > "False: false",
+
+         _ < 200,
+         _ < "X-Mock-Binary: text/plain",
+         _ < "X-Mock-Int: 10",
+         _ < "X-Mock-Float: 1.0",
+         _ < "X-Mock-E: 1.0e2",
+         _ < "X-Mock-True: true",
+         _ < "X-Mock-False: false"
+      ]
+   ),
+   m_http_mock:free().
+
+%%
+%%
 http_text_encode_binary(_) ->
    m_http_mock:init(200, [], []),
    {ok, _} = m_http:once(
