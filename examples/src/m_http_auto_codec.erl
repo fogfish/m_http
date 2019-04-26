@@ -19,6 +19,7 @@
 %%   Example of m_http compose feature
 -module(m_http_auto_codec).
 -compile({parse_transform, category}).
+-compile({parse_transform, generic}).
 
 -export([gen/0, adt/0]).
 
@@ -41,8 +42,7 @@ adt() ->
       _ > "POST http://httpbin.org/post",
       _ > "Accept: application/json",
       _ > "Content-Type: application/json",
-      _ > {record_info(fields, adt),
-            #adt{hello = <<"world">>}},
+      _ > generic:from(#adt{hello = <<"world">>}),
 
       _ < 200,
       _ < #adt{

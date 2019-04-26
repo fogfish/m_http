@@ -19,6 +19,7 @@
 %%   common test suite for m_http public api
 -module(m_http_SUITE).
 -compile({parse_transform, category}).
+-compile({parse_transform, generic}).
 
 -export([all/0]).
 -compile(export_all).
@@ -241,9 +242,7 @@ http_body_encode_adt(_) ->
       [m_http ||
          _ > {'GET', "http://example.com/"},
          _ > "Content-Type: application/json",
-         _ > {record_info(fields, adt),
-            #adt{a = <<"hello">>, b = <<"world">>}
-         },
+         _ > generic:from(#adt{a = <<"hello">>, b = <<"world">>}),
 
          _ < 200,
          _ < "X-Mock-Body: {\"a\":\"hello\",\"b\":\"world\"}"

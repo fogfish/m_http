@@ -84,17 +84,6 @@ putT(Expr) when is_list(Expr) ->
          payload(Value)
    end;
 
-putT({Type, Struct}) ->
-   payload(
-      maps:from_list(
-         [{typecast:s(Key), Value} ||
-            {Key, Value} <- lists:zip(Type, tl(tuple_to_list(Struct))),
-            Value /= undefined,
-            Value /= null
-         ]
-      )
-   );
-
 putT(X) ->
    payload(X).
 

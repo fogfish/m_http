@@ -97,14 +97,13 @@ You can also use native Erlang data types (e.g. maps, list of pairs) as egress p
 ]
 ```
 
-The library support a serialization of algebraic data types -- Erlang records. You have to supply a record structure `record_info(fields, ...)` along with your data.
+The library support a serialization of algebraic data types -- Erlang records with help of generic feature from datum library.
 
 ```erlang
 [m_http ||
    ...
    _ > "Content-Type: application/json",
-   _ > {record_info(fields, myrecord),
-            #myrecord{ ... }}
+   _ > generic:from(#myrecord{ ... })
    ...
 ]
 ```
