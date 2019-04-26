@@ -234,4 +234,19 @@ http_body_decode_adt(_) ->
    ),
    m_http_mock:free().
 
+%%
+http_body_encode_adt(_) -> 
+   m_http_mock:init(200, [], []),
+   {ok, _} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/"},
+         _ > "Content-Type: application/json",
+         _ > {record_info(fields, adt),
+            #adt{a = <<"hello">>, b = <<"world">>}
+         },
 
+         _ < 200,
+         _ < "X-Mock-Body: {\"a\":\"hello\",\"b\":\"world\"}"
+      ]
+   ),
+   m_http_mock:free().
