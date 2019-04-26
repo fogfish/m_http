@@ -97,7 +97,7 @@ You can also use native Erlang data types (e.g. maps, list of pairs) as egress p
 ]
 ```
 
-The library support a serialization of algebraic data types -- Erlang records with help of generic feature from datum library.
+The library support a serialization of algebraic data types -- Erlang records with help of [generic feature](https://github.com/fogfish/datum) from datum library.
 
 ```erlang
 [m_http ||

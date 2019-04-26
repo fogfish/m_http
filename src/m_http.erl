@@ -323,17 +323,3 @@ require(header, Lens) ->
 
 require(content, Lens) ->
    require( lens:c(lens:tl(), lens:hd(), Lens) ).
-
-%%
-%%
--spec defined(lens:lens()) -> m(_).
-
-defined(Lens) ->
-   fun(State) ->
-      case lens:get(lens:c(lens:at(ret, #{}), Lens), State) of
-         undefined ->
-            throw(undefined);
-         LensFocusedAt ->
-            [LensFocusedAt | State]
-      end
-   end.
