@@ -112,30 +112,11 @@ getT('*') ->
 
 getT(ADT)
  when is_tuple(ADT) ->
-   fun(State) ->
-      Struct = erlang:list_to_tuple(
-         [cast(X, State) || X <- erlang:tuple_to_list(ADT)]
-      ),
-      [Struct | State]
-   end;
+   require(content, lens:p(ADT));
 
 getT(Lens)
  when is_function(Lens) ->
    require(content, Lens).
-
-
-cast(Lens, State)
- when is_function(Lens) ->
-   case lens:get(lens:c(lens:at(ret, #{}), lens:tl(), lens:hd(), Lens), State) of
-      {ok, Expect} ->
-         Expect;
-      {error, Reason} ->
-         throw(Reason);
-      LensFocusedAt ->
-         LensFocusedAt
-   end;
-cast(Value, _) ->
-   Value.
 
 %%
 %% @doc evaluate monadic expression
