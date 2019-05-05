@@ -2,7 +2,7 @@
 [{<<"certifi">>,{pkg,<<"certifi">>,<<"2.5.1">>},1},
  {<<"datum">>,
   {git,"https://github.com/fogfish/datum",
-       {ref,"f4a00d725c40893845e9fea11d1189e9e8ecfc5e"}},
+       {ref,"ff68851743e0c32831804772994874d9d0d1fb01"}},
   0},
  {<<"hackney">>,{pkg,<<"hackney">>,<<"1.15.1">>},0},
  {<<"idna">>,{pkg,<<"idna">>,<<"6.0.0">>},1},
