@@ -23,7 +23,7 @@
 %%
 -export([start/0]).
 -export([unit/1, fail/1, '>>='/2, putT/1, getT/1]).
--export([new/1, method/1, header/2, payload/1, request/1, request/0]).
+-export([new/1, so/1, method/1, header/2, payload/1, request/1, request/0]).
 -export([once/1, once/2]).
 
 %%
@@ -197,6 +197,13 @@ new(Url) ->
 
 url_string({uri, _, _} = Url) -> uri:s(Url);
 url_string(Url) -> Url. 
+
+%% 
+%% set socket options
+-spec so(_) -> m(_).
+
+so(SOpts) ->
+   m_state:put(lens:at(so), SOpts).
 
 %%
 %% set method of http request

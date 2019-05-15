@@ -66,6 +66,25 @@ http_pass_method_and_url(_) ->
    m_http_mock:free().
 
 %%
+http_pass_socket_options(_) ->
+   m_http_mock:init(200, [], []),
+   {ok, _} = m_http:once(
+      [m_http ||
+         cats:new("http://example.com/"),
+         cats:so([]),
+         cats:method('GET'),
+
+         [{200, _, Head} | _] <- cats:request(60000),
+         #{
+            <<"X-Mock-Mthd">> := <<"GET">>,
+            <<"X-Mock-Url">>  := <<"http://example.com/">>
+         } =< maps:from_list(Head),
+         cats:unit(pass)
+      ]
+   ),
+   m_http_mock:free().
+
+%%
 http_pass_head(_) ->
    m_http_mock:init(200, [], []),
    {ok, _} = m_http:once(
