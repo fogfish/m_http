@@ -178,6 +178,7 @@ l_req_payload() ->
 
 
 
+
 %%
 %% create a context for http request
 -spec new(_) -> m(_).
@@ -185,7 +186,7 @@ l_req_payload() ->
 new(Url) ->
    fun(State) ->
       Request = #'GET'{
-         uri     = Url,
+         uri     = url_string(Url),
          headers = [
             {<<"Connection">>, <<"keep-alive">>},
             {<<"Accept">>,     <<"*/*">>}
@@ -194,6 +195,8 @@ new(Url) ->
       [Url | State#{req => [Request]}]
    end.
 
+url_string({uri, _, _} = Url) -> uri:s(Url);
+url_string(Url) -> Url. 
 
 %%
 %% set method of http request
