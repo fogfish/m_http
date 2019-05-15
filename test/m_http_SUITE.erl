@@ -21,7 +21,7 @@
 -compile({parse_transform, category}).
 -compile({parse_transform, generic}).
 
--export([all/0]).
+-export([all/0, init_per_suite/1, end_per_suite/1]).
 -compile(export_all).
 
 %%
@@ -32,6 +32,14 @@ all() ->
       Test =/= end_per_suite,
       NAry =:= 1
    ].
+
+%%
+init_per_suite(Config) ->
+   {ok, _} = application:ensure_all_started(m_http),
+   Config.
+
+end_per_suite(_) ->
+   application:stop(m_http).
 
 %%
 http_pass_method(_) ->
