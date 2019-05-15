@@ -53,11 +53,11 @@ deref(X) ->
 %%
 -spec encode(_, _) -> datum:either(_).
 
-encode(<<"application/json", _/binary>>, Json) ->
+encode(<<"application/json", _/binary>>, Json) when not is_binary(Json) ->
    m_http_codec_json:encode(Json);
-encode(<<"application/x-ndjson", _/binary>>, Json) ->
+encode(<<"application/x-ndjson", _/binary>>, Json) when not is_binary(Json) ->
    m_http_codec_ndjson:encode(Json);
-encode(<<"application/x-www-form-urlencoded", _/binary>>, Form) ->
+encode(<<"application/x-www-form-urlencoded", _/binary>>, Form) when not is_binary(Form) ->
    m_http_codec_www_form:encode(Form);
 encode(<<"text/plain", _/binary>>, Text) ->
    m_http_codec_text:encode(Text);
