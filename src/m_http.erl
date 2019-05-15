@@ -23,6 +23,7 @@
 %%
 -export([start/0]).
 -export([unit/1, fail/1, '>>='/2, putT/1, getT/1]).
+-export([new/1, method/1, header/2, payload/1, request/1, request/0]).
 -export([once/1, once/2]).
 
 %%
@@ -206,8 +207,12 @@ method(Mthd) ->
 %% add header to http request
 -spec header(_, _) -> m(_).
 
+header(Head, Value)
+ when is_list(Value) ->
+   m_state:put(l_req_header(typecast:s(Head)), typecast:s(Value));
+
 header(Head, Value) ->
-   m_state:put(l_req_header(Head), Value).
+   m_state:put(l_req_header(typecast:s(Head)), Value).
 
 hv(<<$\s, X/binary>>) -> hv(X);
 hv(<<$\t, X/binary>>) -> hv(X);
@@ -241,8 +246,12 @@ payload(Value) ->
 %%
 %% evaluate http request
 -spec request() -> m(_).
+-spec request(timeout()) -> m(_).
 
 request() ->
+   request(60000).
+
+request(_Timeout) ->
    fun(#{so := SOpts} = State) ->
       case 
          hackney:request(
