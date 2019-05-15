@@ -250,7 +250,7 @@ request() ->
             lens:get(l_req_url(), State),
             lens:get(l_req_headers(), State),
             lens:get(l_req_payload(), State),
-            SOpts
+            [{pool, m_http_pool} | SOpts]
          )
       of
          {ok, Code, Head, Stream} ->
