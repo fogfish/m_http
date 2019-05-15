@@ -17,7 +17,7 @@
 %%
 %% @doc
 %%   common test suite for m_http public api
--module(m_http_SUITE).
+-module(m_http_implicit_SUITE).
 -compile({parse_transform, category}).
 -compile({parse_transform, generic}).
 
