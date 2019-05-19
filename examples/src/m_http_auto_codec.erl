@@ -42,7 +42,7 @@ adt() ->
       _ > "POST http://httpbin.org/post",
       _ > "Accept: application/json",
       _ > "Content-Type: application/json",
-      _ > generic:from(#adt{hello = <<"world">>}),
+      _ > generic_of:adt(#adt{hello = <<"world">>}),
 
       _ < 200,
       _ < #adt{

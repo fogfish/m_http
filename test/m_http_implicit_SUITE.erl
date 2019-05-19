@@ -250,7 +250,7 @@ http_body_encode_adt(_) ->
       [m_http ||
          _ > {'GET', "http://example.com/"},
          _ > "Content-Type: application/json",
-         _ > generic:from(#adt{a = <<"hello">>, b = <<"world">>}),
+         _ > generic_of:adt(#adt{a = <<"hello">>, b = <<"world">>}),
 
          _ < 200,
          _ < "X-Mock-Body: {\"a\":\"hello\",\"b\":\"world\"}"
