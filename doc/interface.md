@@ -1,6 +1,6 @@
 # Http Monad Interface
 
-The HTTP monad is implemented as a [category pattern](https://github.com/fogfish/datum/blob/master/doc/category.md). `parse_transform` feature implements a syntax sugar for monads and "do"-notation in Erlang. You have to explicitly declare usage of `category` macros at your code.
+The HTTP monad is implemented as a [category pattern](https://github.com/fogfish/datum/blob/master/doc/category.md). `parse_transform` feature implements a syntax sugar for monads and "do"-notation in Erlang. You have to explicitly declare usage of `category` macro at your code.
 
 ```erlang
 -compile({parse_transform, category}).
@@ -31,7 +31,7 @@ Please check [Composition with state](https://github.com/fogfish/datum/blob/mast
 
 Symbols `>` define writer morphism that focuses inside and reshapes HTTP protocol request. The writer morphism is used to declare HTTP method, destination URL, request headers and payload.
 
-Symbols `<` is reader morphism that focuses into side-effect, HTTP protocol response. The reader morphism is a pattern matcher, is used to match HTTP response code, headers and response payload. 
+Symbols `<` is reader morphism that focuses into side-effect, HTTP protocol response. The reader morphism is a pattern matcher, is used to match HTTP response code, headers and response payload. It helps us to declare our expectations on the response. The evaluation of "program" fails if expectations do not match actual response.
 
 Please note that `[m_http || Arrow1, ..., ArrowN]` and its compositions returns IO-monad, which implements on-demand lazy I/O. The library implements a helper function `fun m_http:once/1` that evaluates a program. 
 
@@ -97,13 +97,13 @@ You can also use native Erlang data types (e.g. maps, list of pairs) as egress p
 ]
 ```
 
-The library support a serialization of algebraic data types -- Erlang records with help of [generic feature](https://github.com/fogfish/datum) from datum library.
+The library support a serialization of algebraic data types -- Erlang records with help of [generic feature](https://github.com/fogfish/datum/blob/master/doc/generic.md) from datum library.
 
 ```erlang
 [m_http ||
    ...
    _ > "Content-Type: application/json",
-   _ > generic:from(#myrecord{ ... })
+   _ > generic_of:myrecord(#myrecord{ ... })
    ...
 ]
 ```
@@ -189,6 +189,16 @@ Additionally, you can "lift" response to algebraic data types -- Erlang records.
    }
 ]
 ```
+
+Secondly, you can use generic lens feature to decode the content to ADT
+
+```erlang
+[m_http ||
+   ...
+   _ < labelled:lens(#myrecord{})
+]
+```
+
 
 ### Example
 

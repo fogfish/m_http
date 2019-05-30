@@ -73,14 +73,16 @@ If you are using `rebar3` you can include the library in your project with
 
 Please study the syntax and [HTTP monad interface](doc/interface.md). The library supplies [examples](examples) to demonstrate its abilities. This section is a short references to these features. Note, example project uses [httpbin.org](http://httpbin.org) service.
 
-An example workflow is
+The following example demonstrates a typical usage scenario. The code uses `_ >` prefix to declare request (what is going to be send to host) and `_ <` prefix to declare expected response. The evaluation of "program" fails if expectations do not match actual response.
  
 ```erlang
 example() ->
    [m_http ||
+      %% request specification
       _ > "GET http://example.com",
       _ > "Accept: text/html",
 
+      %% response specification
       _ < 200,
       _ < "Content-Type: text/html; charset=UTF-8",
       _ < '*'
@@ -102,7 +104,7 @@ application:ensure_all_started(examples).
 
 **Monadic abstraction**
 
-Check [m_http_syntax.erl](examples/src/m_http_syntax.erl).
+Check [m_http_syntax.erl](examples/src/m_http_syntax.erl), the example guides you thought the basic syntax.
 
 ```erlang
 %%
@@ -120,7 +122,7 @@ m_http:once(IO).
 
 **Composition of HTTP monads**
 
-Check [m_http_compose.erl](examples/src/m_http_compose.erl).
+Check [m_http_compose.erl](examples/src/m_http_compose.erl), the examples shows the composition practices of multiple requests.
 
 ```erlang
 %%
@@ -138,7 +140,7 @@ m_http:once(IO).
 
 **Encode/Decode**
 
-Check [m_http_codec.erl](examples/src/m_http_codec.erl).
+Check [m_http_auto_codec.erl](examples/src/m_http_auto_codec.erl), the example illustrates libraries ability to decode content to Erlang native representations, including records.
 
 ```erlang
 %%
@@ -172,25 +174,29 @@ m_http:once(IO).
 
 **Declarative testing of RESTfull API**
 
-Check [httpbin_SUITE.erl](examples/test/httpbin_SUITE.erl)
+Check [httpbin_SUITE.erl](examples/test/httpbin_SUITE.erl). The examples shows a libraries ability to develop a test cases for your RESTfull APIs.
 
 **Non I/O simulation**
 
-Check [m_http_mock_SUITE.erl](examples/test/m_http_mock_SUITE.erl)
+Check [m_http_mock_SUITE.erl](examples/test/m_http_mock_SUITE.erl). The examples demonstrates how to mock HTTP I/O during unit testing.
 
 ### More Information
 
 * Study [category pattern](https://github.com/fogfish/datum/blob/master/doc/category.md) as composition style of development to build a new things from small reusable elements.
 * Study syntax and [HTTP monad interface](doc/interface.md)
+* Study the [generic representation](https://github.com/fogfish/datum/blob/master/doc/generic.md).
 
 
 ## How To Contribute
 
-The library is Apache 2.0 licensed and accepts contributions via GitHub pull requests:
+The library is [Apache 2.0](LICENSE) licensed and accepts contributions via GitHub pull requests:
 
-* Fork the repository on GitHub
-* Read build instructions
-* Make a pull request
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
 
 The build process requires [Erlang/OTP](http://www.erlang.org/downloads) version 19.0 or later and essential build tools.
 
@@ -233,9 +239,4 @@ If you experience any issues with the library, please let us know via [GitHub is
 
 ## License
 
-Copyright (c) 2016, Dmitry Kolesnikov, Mario Cardona
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
+[![See LICENSE](https://img.shields.io/hexpm/l/plug.svg?style=for-the-badge)](LICENSE)

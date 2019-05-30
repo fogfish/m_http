@@ -21,7 +21,7 @@
 -compile({parse_transform, category}).
 -compile({parse_transform, generic}).
 
--export([gen/0, adt/0]).
+-export([gen/0, adt/0, lens/0]).
 
 -record(adt, {hello}).
 
@@ -48,5 +48,16 @@ adt() ->
       _ < #adt{
          hello = lens:c(lens:at(<<"json">>), lens:at(<<"hello">>))
       }
+   ].
+
+lens() ->
+   [m_http ||
+      _ > "POST http://httpbin.org/post",
+      _ > "Accept: application/json",
+      _ > "Content-Type: application/json",
+      _ > generic_of:adt(#adt{hello = <<"world">>}),
+
+      _ < 200,
+      _ < lens:c(lens:at(<<"json">>), labelled:lens(#adt{})) 
    ].
 
