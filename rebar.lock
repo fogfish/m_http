@@ -1,9 +1,6 @@
 {"1.1.0",
 [{<<"certifi">>,{pkg,<<"certifi">>,<<"2.5.1">>},1},
- {<<"datum">>,
-  {git,"https://github.com/fogfish/datum",
-       {ref,"79713f74b23268f0c5c517f8727fdc2c830b480a"}},
-  0},
+ {<<"datum">>,{pkg,<<"datum">>,<<"4.6.0">>},0},
  {<<"hackney">>,{pkg,<<"hackney">>,<<"1.15.1">>},0},
  {<<"idna">>,{pkg,<<"idna">>,<<"6.0.0">>},1},
  {<<"jsx">>,{pkg,<<"jsx">>,<<"2.9.0">>},0},
@@ -15,6 +12,7 @@
 [
 {pkg_hash,[
  {<<"certifi">>, <<"867CE347F7C7D78563450A18A6A28A8090331E77FA02380B4A21962A65D36EE5">>},
+ {<<"datum">>, <<"680B4694E1D13A140CF7759DBCA1BFA8139F602A05B1A1B03B998129BC80C515">>},
  {<<"hackney">>, <<"9F8F471C844B8CE395F7B6D8398139E26DDCA9EBC171A8B91342EE15A19963F4">>},
  {<<"idna">>, <<"689C46CBCDF3524C44D5F3DDE8001F364CD7608A99556D8FBD8239A5798D4C10">>},
  {<<"jsx">>, <<"D2F6E5F069C00266CAD52FB15D87C428579EA4D7D73A33669E12679E203329DD">>},
