@@ -11,6 +11,12 @@
          hackney
       ]},
       {mod, {m_http_app, []}},
-      {env, []}
+      {env, []},
+
+      {licenses, ["Apache"]},
+      {maintainers, ["Dmitry Kolesnikov", "Mario Cardona"]},
+      {links, [
+         {"GitHub", "https://github.com/fogfish/m_http"}
+      ]}
    ]
 }.  
