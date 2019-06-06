@@ -3,7 +3,8 @@
 A class of Erlang monads which can do http requests with few interesting properties such as composition and laziness. 
 
 [![Build Status](https://secure.travis-ci.org/fogfish/m_http.svg?branch=master)](http://travis-ci.org/fogfish/m_http) 
-[![Coverage Status](https://coveralls.io/repos/github/fogfish/m_http/badge.svg?branch=master)](https://coveralls.io/github/fogfish/m_http?branch=master) 
+[![Coverage Status](https://coveralls.io/repos/github/fogfish/m_http/badge.svg?branch=master)](https://coveralls.io/github/fogfish/m_http?branch=master)
+[![Hex.pm](https://img.shields.io/hexpm/v/m_http.svg)](https://hex.pm/packages/m_http)
 
 ## Inspiration
 
@@ -60,6 +61,12 @@ The latest version of the library is available at its `master` branch. All devel
 ### Installation
 
 If you are using `rebar3` you can include the library in your project with
+
+```erlang
+{deps, [m_http]}.
+```
+
+or
 
 ```erlang
 {deps, [
