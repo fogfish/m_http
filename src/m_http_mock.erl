@@ -20,21 +20,35 @@
 -module(m_http_mock).
 
 -export([
-   init/0
+   init/1
 ,  init/3
 ,  free/0
-,  response/3
 ]).
+
+%%
+%%
+init(Router)
+ when is_function(Router) ->
+   init(),
+   response(Router);
+
+init(Body)
+ when is_list(Body) ->
+   init(fun(_) -> {200, [], Body} end);
+
+init(Code)
+ when is_integer(Code) ->
+   init(fun(_) -> {Code, [], []} end).
+
+%%
+%%
+init(Code, Head, Body) ->
+   init(fun(_) -> {Code, Head, Body} end).
 
 %%
 %%
 init() ->
    meck:new(hackney, [unstick]).
-
-%% @todo: mock input via routing function fun(Url) -> {Code, Head, Body}
-init(Code, Head, Body) ->
-   init(),
-   response(Code, Head, Body).
 
 %%
 %%
@@ -43,7 +57,7 @@ free() ->
 
 %%
 %%
-response(Code, Head, Body) ->
+response(Router) ->
    meck:expect(hackney, request,
       fun(Mthd, Url, ReqHead, ReqBody, _Opts) ->
          MockHead = [
@@ -51,11 +65,12 @@ response(Code, Head, Body) ->
          ,  {<<"X-Mock-Url">>,  typecast:s(Url)}
          ,  {<<"X-Mock-Body">>, typecast:s(ReqBody)}
          |  [{<<"X-Mock-", H/binary>>, V}  || {H, V} <- ReqHead]
-         ], 
+         ],
+         {Code, Head, Body} = Router(#{method => Mthd, url => Url, headers => ReqHead, body => ReqBody}),
+         stream_http(Body),
          {ok, Code, Head ++ MockHead, undefined}
       end
-   ),
-   stream_http(Body).
+   ).
 
 stream_http([]) ->
    meck:expect(hackney, stream_body, fun(_) -> done end);
