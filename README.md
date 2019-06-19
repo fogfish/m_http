@@ -189,7 +189,7 @@ Check [m_http_mock_SUITE.erl](examples/test/m_http_mock_SUITE.erl). The examples
 
 You can customize and simulate downstream services with help of router function. The function is called every time with `#{method => ..., url => ..., headers => ..., body => ...}` whenever your application makes http call.
 
-```
+```erlang
 my_test(_) ->
    m_http_mock:init(fun router/1),
    ...
