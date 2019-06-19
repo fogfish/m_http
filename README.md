@@ -187,6 +187,18 @@ Check [httpbin_SUITE.erl](examples/test/httpbin_SUITE.erl). The examples shows a
 
 Check [m_http_mock_SUITE.erl](examples/test/m_http_mock_SUITE.erl). The examples demonstrates how to mock HTTP I/O during unit testing.
 
+You can customize and simulate downstream services with help of router function. The function is called every time with `#{method => ..., url => ..., headers => ..., body => ...}` whenever your application makes http call.
+
+```
+my_test(_) ->
+   m_http_mock:init(fun router/1),
+   ...
+
+router(#{url := "http://example.com/this"}) -> {200, [], [<<"...">>]};
+router(#{url := "http://example.com/that"}) -> {200, [], [<<"...">>]};
+router(_}) -> {500, [], []}.
+```
+
 ### More Information
 
 * Study [category pattern](https://github.com/fogfish/datum/blob/master/doc/category.md) as composition style of development to build a new things from small reusable elements.

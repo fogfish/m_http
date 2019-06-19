@@ -187,7 +187,21 @@ http_body_match_any(_) ->
       ]
    ),
    m_http_mock:free().
-   
+
+%%
+http_body_match_any_stream(_) ->
+   m_http_mock:init([<<$a>>, <<$b>>, <<$c>>, <<$d>>, <<$e>>, <<$f>>]),
+
+   {ok, [<<$a>>, <<$b>>, <<$c>>, <<$d>>, <<$e>>, <<$f>>]} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/"},
+
+         _ < 200,
+         _ < '*'
+      ]
+   ),
+   m_http_mock:free().
+
 %%
 http_body_decode_and_match(_) ->
    m_http_mock:init(200, 
@@ -257,3 +271,41 @@ http_body_encode_adt(_) ->
       ]
    ),
    m_http_mock:free().
+
+%%
+http_mock_with_router(_) ->
+   m_http_mock:init(
+      fun
+         (#{url := "http://example.com/a"}) -> {200, [], [<<"a">>]};
+         (#{url := "http://example.com/b"}) -> {200, [], [<<"b">>]};
+         (_) -> {500, [], []}
+      end
+   ),
+
+   {ok, [<<"a">>]} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/a"},
+
+         _ < 200,
+         _ < '*'
+      ]
+   ),
+   {ok, [<<"b">>]} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/b"},
+
+         _ < 200,
+         _ < '*'
+      ]
+   ),
+   {error, _} = m_http:once(
+      [m_http ||
+         _ > {'GET', "http://example.com/"},
+
+         _ < 200,
+         _ < '*'
+      ]
+   ),
+
+   m_http_mock:free().
+
