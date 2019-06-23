@@ -22,7 +22,7 @@
 %%
 %%
 -export([start/0]).
--export([unit/1, fail/1, '>>='/2, putT/1, getT/1]).
+-export([unit/1, fail/1, '>>='/2, get/1, put/2, putT/1, getT/1]).
 -export([new/1, so/1, method/1, header/2, payload/1, request/1, request/0]).
 -export([once/1, once/2]).
 
@@ -67,6 +67,22 @@ fail(X) ->
 
 '>>='(X, Fun) ->
    m_state:'>>='(X, Fun).
+
+%%
+%%
+-spec get(_) -> m(_).
+
+get(Key)
+ when is_binary(Key) ->
+   m_state:get(lens:c(lens:at(env), lens:at(Key))).
+
+%%
+%%
+-spec put(_, _) -> m(_).
+
+put(Key, X)
+ when is_binary(Key) ->
+   m_state:put(lens:c(lens:at(env), lens:at(Key)), X).
 
 %%
 %% @doc 
@@ -124,7 +140,7 @@ getT(Lens)
 -spec once(m(_)) -> _.
 
 once(Expr) ->
-   once(Expr, #{so => []}).
+   once(Expr, #{so => [], env => #{}}).
 
 once(Expr, SOpt) ->
    try
@@ -263,7 +279,7 @@ request() ->
 
 request(_Timeout) ->
    fun(#{so := SOpts} = State) ->
-      case 
+      case
          hackney:request(
             lens:get(l_req_method(), State),
             lens:get(l_req_url(), State),

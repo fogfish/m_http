@@ -60,13 +60,15 @@ The latest version of the library is available at its `master` branch. All devel
 
 ### Installation
 
-If you are using `rebar3` you can include the library in your project with
+The stable library release is available via hex packages, add the library as dependency to `rebar.config`.
 
 ```erlang
-{deps, [m_http]}.
+{deps, [
+   m_http
+]}.
 ```
 
-or
+Latest development version is available at GitHub, add the library as dependency to `rebar.config`
 
 ```erlang
 {deps, [

@@ -33,7 +33,7 @@ Symbols `>` define writer morphism that focuses inside and reshapes HTTP protoco
 
 Symbols `<` is reader morphism that focuses into side-effect, HTTP protocol response. The reader morphism is a pattern matcher, is used to match HTTP response code, headers and response payload. It helps us to declare our expectations on the response. The evaluation of "program" fails if expectations do not match actual response.
 
-Please note that `[m_http || Arrow1, ..., ArrowN]` and its compositions returns IO-monad, which implements on-demand lazy I/O. The library implements a helper function `fun m_http:once/1` that evaluates a program. 
+Please note that `[m_http || Arrow1, ..., ArrowN]` and its compositions returns IO-monad, which implements on-demand lazy I/O. The library implements a helper function `fun m_http:once/1` or `fun m_http:once/2` that evaluates a program. 
 
 ## Usage
 
